@@ -2,37 +2,29 @@ import re
 import getpass
 
 
-PASSWORD_MIN_STRENGTH = 1
-
-
-def check_password_length(password):
-    return 2 if len(password) >= 8 else 0
-
-
-def check_password_for_lowercase(password):
-    return 1 if re.search(r'[a-z]+', password) else 0
-
-
-def check_password_for_uppercase(password):
-    return 1 if re.search(r'[A-Z]+', password) else 0
-
-
-def check_password_for_digits(password):
-    return 2 if re.search(r'\d', password) else 0
-
-
-def check_password_for_symbols(password):
-    return 3 if re.search(r'[^A-Za-z0-9]+', password) else 0
-
-
 def get_password_strength(password):
-    password_strength = (check_password_length(password) +
-                         check_password_for_lowercase(password) +
-                         check_password_for_uppercase(password) +
-                         check_password_for_digits(password) +
-                         check_password_for_symbols(password) +
-                         PASSWORD_MIN_STRENGTH)
-    return password_strength
+    strength = 1  # minimal value
+    length_points = 1
+    lowercase_points = 1
+    uppercase_points = 1
+    digit_points = 2
+    symbol_points = 3
+    if len(password) >= 8:
+        strength += length_points
+
+    if re.search(r'[a-z]+', password):
+        strength += lowercase_points
+
+    if re.search(r'[A-Z]+', password):
+        strength += uppercase_points
+
+    if re.search(r'\d', password):
+        strength += digit_points
+
+    if re.search(r'[^A-Za-z0-9]+', password):
+        strength += symbol_points
+
+    return strength
 
 
 if __name__ == '__main__':
