@@ -4,7 +4,7 @@ import getpass
 
 def get_password_strength(password):
     strength = 1  # minimal value
-    length_points = 1
+    length_points = 2
     lowercase_points = 1
     uppercase_points = 1
     digit_points = 2
